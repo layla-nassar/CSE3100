@@ -15,7 +15,7 @@ int main(void) {
     printf("Sum from 1 to %d = %lld\n", n, sum); // Use %lld for long long
 
     // Checking for overflow
-    if (sum > INT_MAX) {
+    if (sum > INT_MAX) { 
         printf("Overflow occurred for n = %d\n", n);
     } else {
         printf("The sum is correct for n = %d\n", n);
