@@ -5,7 +5,7 @@
 // Function to calculate the cumulative probability
 double cum_prob(int k, long trials) {
     int successful_trials = 0;
-    for (long i = 0; i < trials; i++) {
+    for (int i = 0; i < trials; i++) {
         int sum = 0;
         // Simulate tossing 3 dice
         for (int j = 0; j < 3; j++) {
