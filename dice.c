@@ -32,6 +32,9 @@ int main() {
     assert(k >= 3 && k <= 18);
 
     srand(12345);
+
+    // Output the probability with exactly 5 decimal places
     printf("P(sum of the 3 dice is at least %d) = %.5lf\n", k, cum_prob(k, n));
+
     return 0;
 }
