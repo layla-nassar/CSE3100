@@ -19,7 +19,7 @@ double cum_prob(int k, long trials) {
         }
     }
     // Calculate the probability
-    double probability = (double)successful_trials / trials;
+    double probability = ((double) successful_trials) / ((double) trials);
     return probability;
 }
 
