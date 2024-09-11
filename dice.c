@@ -27,7 +27,7 @@ int main() {
     long n = 10000000;
     int k;
 
-    printf("Enter k: ");
+    printf("Enter k :");
     scanf("%d", &k);
     assert(k >= 3 && k <= 18);
 
