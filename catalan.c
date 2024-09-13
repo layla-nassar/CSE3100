@@ -14,9 +14,9 @@ int main(void) {
 
     while (scanf("%d", &n) == 1) {
         if (n < 0) {
-            printf("C(%d) is not defined.\n", n);
+            printf("C(%2d) is not defined.\n", n);
         } else {
-            printf("C(%d)=%18ld\n", n, catalan_number(n));
+            printf("C(%2d)=%18ld\n", n, catalan_number(n));
         }
     }
 
