@@ -1,29 +1,23 @@
 #include <stdio.h>
 
-// Function to calculate factorial
-unsigned long long factorial(int n) {
-    if (n == 0 || n == 1) {
-        return 1;
+// Recursive function to calculate n-th Catalan number using recurrence
+long catalan_number(int n) {
+    if (n == 0) {
+        return 1;  // Base case: C(0) = 1
+    } else {
+        return (4 * n - 2) * catalan_number(n - 1) / (n + 1);  // Recurrence relation
     }
-    unsigned long long fact = 1;
-    for (int i = 2; i <= n; i++) {
-        fact *= i;
-    }
-    return fact;
 }
 
-// Function to calculate Catalan number
-unsigned long long catalan(int n) {
-    return factorial(2 * n) / (factorial(n + 1) * factorial(n));
-}
-
-int main() {
+int main(void) {
     int n;
-    printf("Enter the value of n to calculate Catalan numbers: ");
-    scanf("%d", &n);
 
-    for (int i = 0; i <= n; i++) {
-        printf("C(%d) = %llu\n", i, catalan(i));
+    while (scanf("%d", &n) == 1) {
+        if (n < 0) {
+            printf("C(%d) is not defined.\n", n);
+        } else {
+            printf("C(%d)=%18ld\n", n, catalan_number(n));
+        }
     }
 
     return 0;
