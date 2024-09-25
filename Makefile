@@ -1,19 +1,13 @@
-# This is a comment line
-
-#define variables so it is easier to make changes
+TARGETS=diffusion monopoly
 CC=gcc
-CFLAGS=-g -Wall -std=c99
-TARGETS=ex-factorial catalan 
+CFLAGS=-Wall -g -std=c99
 
-all: $(TARGETS)
+all : $(TARGETS)
 
-ex-factorial: ex-factorial.c
-	$(CC) $(CFLAGS) -o ex-factorial ex-factorial.c
+$(TARGETS): %: %.c
 
-catalan: catalan.c
-	$(CC) $(CFLAGS) -o catalan catalan.c
+clean: 
+	@rm -f $(TARGETS) a.out *.o
 
-clean:
-	rm -rf *.o *~ $(TARGETS) a.out
-
-
+sub:
+	@zip $${PWD##*/}.zip $(SRCS) Makefile
