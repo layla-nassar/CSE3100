@@ -48,8 +48,8 @@ double density(int *grid, int n, double r)
                 int dist_squared = x * x + y * y + z * z;
                 int index = (x + n) * (2 * n + 1) * (2 * n + 1) + (y + n) * (2 * n + 1) + (z + n);
                 
-                if (dist_squared <= radius_squared) {
-                    count += grid[index]; 
+               if (dist_squared <= radius_squared) {
+                     count += grid[index];
                 }
                 total += grid[index]; 
             }
@@ -65,7 +65,7 @@ void print_result(int *grid, int n)
     printf("radius density\n");
     for(int k = 1; k <= 20; k++)
     {
-        printf("%.2lf   %lf\n", 0.05*k, density(grid, n, 0.05*k));
+        printf("%.2lf   %lf\n", 0.05 * k, density(grid, n, 0.05 * k));
     }
 }
 
