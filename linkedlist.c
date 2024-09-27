@@ -155,6 +155,5 @@ node *reverse_list(node *head) {
     }
 
     head = prev; 
-    error_message(ERR_NOREVERSE);
     return head;
 }
