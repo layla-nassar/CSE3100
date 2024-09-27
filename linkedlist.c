@@ -148,12 +148,13 @@ node *reverse_list(node *head) {
     node *next = NULL;
 
     while (current != NULL) {
-        next = current->next; // Store the next node
-        current->next = prev; // Reverse the current node's pointer
-        prev = current;       // Move prev to this node
-        current = next;       // Move to the next node
+        next = current->next; 
+        current->next = prev;
+        prev = current;       
+        current = next;       
     }
 
-    head = prev; // Set the new head
+    head = prev; 
+    error_message(ERR_NOREVERSE);
     return head;
 }
