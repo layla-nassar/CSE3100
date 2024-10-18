@@ -17,6 +17,7 @@
 //What we need to do is to find the solutions of this puzzle. We limit the solutions to have
 //at most 10 moves.
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -26,6 +27,7 @@
 
 #define MAX_LINE 80
 #define MAX 100
+
 void write_solution(int b[], int moves, int pd)
 {
     char buffer[MAX_LINE], temp_str[MAX_LINE];
@@ -37,6 +39,7 @@ void write_solution(int b[], int moves, int pd)
         strcat(buffer, temp_str);
     }
     strcat(buffer, "\n");
+
     //Add one line of code to write the buffer to the pipe pd
     write(pd, buffer, strlen(buffer));
 }
@@ -69,6 +72,7 @@ int read_solution(int pd, char buffer[])
 
 int main(int argc, char *argv[])
 {
+    
     //We use the array a to describe the puzzle
     int a[] = {3, 6, 4, 1, 3, 4, 2, 5, 3, 0};
     //We use the array b to save the moves the walker makes
@@ -81,7 +85,7 @@ int main(int argc, char *argv[])
     int n = 10;
 
     int pd[2];
-	//pipe creation
+    //pipe creation
     if(pipe(pd) == -1)
     {
         perror("Error.");
@@ -93,14 +97,15 @@ int main(int argc, char *argv[])
     if(pid == 0)
     {
         //We close pd[0] since child process do not need to read from the pipe
-        close(pd[0]);
-        for(int i = 0; i< n; i++)
+        close(pd[0]); 
+
+        for(int i = 0; i < n; i++)
         {
             pid_t cpid = fork();
             if(cpid == 0)
             {   
                 //If we find a solution, we write the solution to the pipe
-                if(a[cur]==0)
+                if(a[cur] == 0)
                 {
                     b[moves - 1] = cur;
                     write_solution(b, moves, pd[1]);
@@ -108,21 +113,21 @@ int main(int argc, char *argv[])
                     close(pd[1]);
                     return 0;
                 }
-                else if(cur + a[cur] >= 0 && cur + a[cur] <n)
+                else if(cur + a[cur] >= 0 && cur + a[cur] < n)
                 {
                     //Add your code here
-                    b[moves] = cur;
+                    b[moves] = cur + a[cur];
                     moves++;
-                    cur = cur + a[cur];
+                    cur += a[cur];
                 }
             }
             else
             {
                 int status;
-				//wait for the child process to finish
                 waitpid(cpid, &status, 0);
+
                 //If we find a solution, we write the solution to the pipe
-                if(a[cur]==0)
+                if(a[cur] == 0)
                 {
                     b[moves - 1] = cur;
                     write_solution(b, moves, pd[1]);
@@ -130,12 +135,12 @@ int main(int argc, char *argv[])
                     close(pd[1]);
                     return 0;
                 }
-                else if(cur - a[cur] >= 0 && cur - a[cur] <n)
+                else if(cur - a[cur] >= 0 && cur - a[cur] < n)
                 {
                     //Add your code here
-                    b[moves] = cur;
+                    b[moves] = cur - a[cur];
                     moves++;
-                    cur = cur - a[cur];
+                    cur -= a[cur];
                 }
             }
         }
@@ -144,14 +149,15 @@ int main(int argc, char *argv[])
         //The following return statement is crucial, why?
         return 0;
     }
+
     //Only the parent process will run the following code
     //There is one parent process here
-
     int status;
-	//wait for the child process to finish
-    waitpid(pid, &status, 0); 
+    //wait for the child process to finish
+    waitpid(pid, &status, 0);
     //It is crucial to close pd[1] here.
     close(pd[1]);
+
     char buffer[MAX_LINE];
     int count = 0;
     char results[MAX][MAX_LINE];
@@ -163,7 +169,8 @@ int main(int argc, char *argv[])
     {
         strcpy(results[count++], buffer);
     }
-    printf("Found solutions %d times.\n", count);    
+
+    printf("Found solutions %d times.\n", count);
     //Next we find the shortest solution
     int min_len = strlen(results[0]);
     int min_k = 0;
@@ -176,7 +183,7 @@ int main(int argc, char *argv[])
         }
     }
     //Print the shortest solution
-    printf("%d moves in the shortest solution.\n", min_len/4);
+    printf("%d moves in the shortest solution.\n", min_len / 4);
     printf("Shortest solution:\n%s\n", results[min_k]);
     close(pd[0]);
     return 0;
