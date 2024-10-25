@@ -1,15 +1,14 @@
-TARGETS=runpipeline
-SRCS=$(patsubst %,%.c,$(TARGETS))
 CC=gcc
-CFLAGS= -Wall -g -std=c99
+CFLAGS=-Wall -g -std=c99
+TARGETS=arithmetic dice
 
-all : $(TARGETS)
+all: $(TARGETS)
 
-$(TARGETS): %: %.c
-	$(CC) $(CFLAGS) -o $@ $<
+arithmetic: arithmetic.c redirect.c redirect.h
+	$(CC) $(CFLAGS) -o $@ $^
 
-clean: 
-	@rm -f $(TARGETS) *.o a.out seqOutput shOutput pipeOutput
+dice: run-dice.h run-dice.c dice.c
+	$(CC) $(CFLAGS) -o $@ $^
 
-ultraclean: clean
-	@rm -f *.dat
+clean:
+	rm -f *.o *~ $(TARGETS) a.out
