@@ -3,6 +3,7 @@
         "limits.h": "c",
         "stdio.h": "c",
         "assert.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "unistd.h": "c"
     }
 }

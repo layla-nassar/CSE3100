@@ -1,14 +1,25 @@
+TARGET1=test-mmul
+OBJS1=test-mmul.o matrix.o mmul.o 
+SRCS1=$(patsubst %.o,%.c,$(OBJS1))
+HEADERS1=matrix.h
+
+TARGET2=printing
+SRCS2=$(patsubst %,%.c,$(TARGET2))
+
+TARGETS=$(TARGET1) $(TARGET2)
 CC=gcc
-CFLAGS=-Wall -g -std=c99
-TARGETS=arithmetic dice
+CFLAGS= -Wall -pthread -g -std=c99
 
-all: $(TARGETS)
+all : $(TARGETS)
 
-arithmetic: arithmetic.c redirect.c redirect.h
+$(TARGET1): $(OBJS1)
 	$(CC) $(CFLAGS) -o $@ $^
 
-dice: run-dice.h run-dice.c dice.c
-	$(CC) $(CFLAGS) -o $@ $^
+clean: 
+	@rm -f $(OBJS1) $(TARGETS)
 
-clean:
-	rm -f *.o *~ $(TARGETS) a.out
+mmul.o: $(@:.o=.c) $(HEADERS1)
+
+matrix.o: $(@:.o=.c) $(HEADERS1) 
+
+test-mmul.o: $(@:.o=.c) $(HEADERS1)
