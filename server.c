@@ -1,3 +1,4 @@
+
 /* server.c -- a stream socket server demo */
 
 #include <stdio.h>
@@ -41,7 +42,7 @@ int get_number(char *s, int *pv)
 
 void gmn_init(gmn_t *pg)
 {
-    pg->v = 34;  // Hardcode the hidden number to 34
+    pg->v = 34;  
     pg->attempts = 0;
     strcpy(pg->message, "You have not got the right number yet.\n");
 }
@@ -69,7 +70,7 @@ void *thread_main(void *arg)
     char buf[MSG_BUF_SIZE];
     int guess, result;
 
-    // Send maximum value to client
+    
     snprintf(buf, sizeof(buf), "%d\n", MAX_VALUE);
     if (send_all(sockfd, buf, strlen(buf)) < 0) {
         perror("Failed to send max value");
@@ -77,9 +78,9 @@ void *thread_main(void *arg)
         return NULL;
     }
 
-    // Game loop
+    
     while (1) {
-        // Receive guess
+        
         if (recv_lines(sockfd, buf, sizeof(buf)) < 0) {
             perror("Failed to receive guess");
             break;
@@ -90,18 +91,18 @@ void *thread_main(void *arg)
         }
         printf("DEBUG: Received guess: %d\n", guess);
 
-        // Check guess
+        
         result = gmn_check(&gmn, guess);
         printf("DEBUG: Hidden number: %d, Result to send: %d, Attempts: %d\n", gmn.v, result, gmn.attempts);
 
-        // Send result
+        
         snprintf(buf, sizeof(buf), "%d\n", result);
         if (send_all(sockfd, buf, strlen(buf)) < 0) {
             perror("Failed to send result");
             break;
         }
 
-        // Send final message if correct
+        
         if (result == 0) {
             if (send_str(sockfd, gmn.message) < 0) {
                 perror("Failed to send final message");
@@ -127,7 +128,7 @@ int main(void)
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
-    hints.ai_flags = AI_PASSIVE; // use my IP
+    hints.ai_flags = AI_PASSIVE; 
 
     if ((rv = getaddrinfo(NULL, PORT, &hints, &servinfo)) != 0) {
         fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));

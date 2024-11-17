@@ -1,3 +1,4 @@
+
 /* client.c -- a stream socket client demo */
 
 #include <stdio.h>
@@ -94,7 +95,7 @@ int main(int argc, char *argv[])
 
     int min = 1, max = 1000, guess, result = 0, attempts = 0;
 
-    // Receive max value from the server
+    
     if (recv_lines(sockfd, buf, sizeof(buf)) < 0) {
         die("Failed to receive maximum value");
     }
@@ -103,17 +104,17 @@ int main(int argc, char *argv[])
     }
     printf("%d\n", max);
 
-    // Binary guessing loop
+    
     while (min <= max) {
-        guess = min + (max - min) / 2;  // Updated midpoint calculation
+        guess = min + (max - min) / 2;  
         printf("My guess: %d\n", guess);
 
-        // Send guess to the server
+        
         if (send_int(sockfd, guess) < 0) {
             die("Failed to send guess");
         }
 
-        // Receive response
+        
         if (recv_lines(sockfd, buf, sizeof(buf)) < 0) {
             die("Failed to receive result");
         }
@@ -122,12 +123,12 @@ int main(int argc, char *argv[])
         }
         printf("%d\n", result);
 
-        // Increment attempts
+        
         attempts++;
 
-        // Adjust range based on result
+        
         if (result == 0) {
-            // Correct guess
+            
             break;
         } else if (result == 1) {
             min = guess + 1;
@@ -136,7 +137,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    // Print final message
+    
     printf("It took you %d attempt(s) to guess the number %d.\n", attempts, guess);
 
     close(sockfd);
