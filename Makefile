@@ -1,15 +1,14 @@
-TARGETS=server client
-SRCS=$(patsubst %,%.c,$(TARGETS))
 CC=gcc
-CFLAGS= -Wall -g -pthread -Wextra -std=gnu99
+CFLAGS=-Wall -g -pthread -std=c99
+TARGETS=lucky game
 
-all : $(TARGETS)
+all: $(TARGETS)
 
-$(TARGETS): %: %.c
-	$(CC) $(CFLAGS) -o $@ $<
+lucky: lucky.c
+	$(CC) $(CFLAGS) -o $@ $^
 
-clean: 
-	@rm -f $(TARGETS) *.o a.out 
+game: game.c
+	$(CC) $(CFLAGS) -o $@ $^
 
-sub: 
-	@zip $${PWD##*/}.zip $(SRCS) Makefile
+clean:
+	rm -f *.o *~ $(TARGETS) a.out
